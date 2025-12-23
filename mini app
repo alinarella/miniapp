@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Mini Case App</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Telegram API -->
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #0f172a;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+    .box {
+      background: #1e293b;
+      padding: 20px;
+      border-radius: 12px;
+      margin-top: 20px;
+    }
+    button {
+      background: #22c55e;
+      border: none;
+      padding: 15px 25px;
+      font-size: 18px;
+      border-radius: 10px;
+      color: black;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+    .prize {
+      font-size: 22px;
+      margin-top: 15px;
+      color: #facc15;
+    }
+  </style>
+</head>
+
+<body>
+
+<h2>🎁 Case Game</h2>
+
+<div class="box">
+  <p>💰 Баланс: <span id="balance">100</span> токенов</p>
+  <button onclick="openCase()">Открыть кейс (10 токенов)</button>
+  <div class="prize" id="prize"></div>
+</div>
+
+<script>
+  const tg = window.Telegram.WebApp;
+  tg.ready();
+
+  let balance = 100;
+
+  const prizes = [
+    { name: "5 токенов", value: 5 },
+    { name: "10 токенов", value: 10 },
+    { name: "20 токенов", value: 20 },
+    { name: "Ничего 😢", value: 0 }
+  ];
+
+  function openCase() {
+    if (balance < 10) {
+      alert("Недостаточно токенов");
+      return;
+    }
+
+    balance -= 10;
+
+    const prize = prizes[Math.floor(Math.random() * prizes.length)];
+    balance += prize.value;
+
+    document.getElementById("balance").innerText = balance;
+    document.getElementById("prize").innerText = "Вы выиграли: " + prize.name;
+  }
+</script>
+
+</body>
+</html>
